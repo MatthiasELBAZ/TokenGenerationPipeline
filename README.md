@@ -1,6 +1,6 @@
 # TokenGenerationPipeline
 
-Due to the revolution of LLM model in the world of AI, companies want to integrate its prformances into their services. However the use of the API can be expensive and the models are  too large to fit on regular devices. The solution will be to split parameters over to disk and ram.
+Due to the revolution of LLM model in the world of AI, companies want to integrate its performances into their services. However the use of the API can be expensive and the models are  too large to fit on regular devices. The solution will be to split parameters over to disk and ram.
 
 The main objective was to create a token generation pipeline for the following models: 
 1. bigscience/bloom-7b1
