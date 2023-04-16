@@ -1,6 +1,6 @@
 # TokenGenerationPipeline
 
-Due to the revolution of LLM model in the world AI, companies want to integrate their powers into their services. However the use of the API can be expensive and the models are  too large to fit on GPU. The solution will be to spill parameters over to disk and ram.
+Due to the revolution of LLM model in the world of AI, companies want to integrate its prformances into their services. However the use of the API can be expensive and the models are  too large to fit on regular devices. The solution will be to split parameters over to disk and ram.
 
 The main objective was to create a token generation pipeline for the following models: 
 1. bigscience/bloom-7b1
@@ -8,12 +8,20 @@ The main objective was to create a token generation pipeline for the following m
 3. google/flan-ul2
 4. cerebras/Cerebras-GPT-13B
 
-Requirements:
-Load as much of the model into the GPU as possible, then load the remainder into CPU Ram.
-Use GPU google Colab T4 instance.
+We need to use the pacakges created from HuggingFace. The client is not looking for a perfect solution but for pipelines suceptible to work after code optimization - something to start with.
 
-The solution is divided on several parts and parameters and we use some high level packages developed by HuggingFace.
+We need to have in mind that the pipeline need:
+1. To load as much of the model into the GPU as possible, then load the remainder into CPU Ram.
+2. To work on GPU google Colab T4 instance.
 
+The solution is divided on several parts and parameters and we use some high level packages developed by HuggingFace based on the following documentations:
+1. https://huggingface.co/blog/accelerate-large-models
+2. https://huggingface.co/docs/accelerate/usage_guides/big_modeling
+3. https://huggingface.co/docs/transformers/main/main_classes/quantization
+
+Many aspects of the model have to be taken with consideration like the parameters format (float32, float16, int8), its architecture also. However, when you load a model directly with HuggingFace package, you load the architecture and the parameters. So, the main idea is to start with an empty model and make sure on which device to store each layer (submodule).
+
+Here the main steps of the pipeline:
 1. We define the checkpoint of the model we want to load.
 
 2. We load the empty model 
